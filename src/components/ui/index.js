@@ -5,3 +5,4 @@ export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './
 export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectItem } from './select'
 export { Label } from './label'
 export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from './card'
+export { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription, DialogClose } from './dialog'

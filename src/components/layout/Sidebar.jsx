@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { ChevronLeft, X } from 'lucide-react'
 import { Button, Input } from '@/components/ui'
 import ColorsAndFont from '@/components/sidebar/ColorsAndFont'
@@ -11,10 +10,16 @@ import AIOptions from '@/components/sidebar/AIOptions'
 import BulkSettings from '@/components/sidebar/BulkSettings'
 import SocialPromo from '@/components/sidebar/SocialPromo'
 
-const Sidebar = ({ isVisible, onToggle }) => {
-  const [url, setUrl] = useState('https://')
-  const [pinCount, setPinCount] = useState(2)
-
+const Sidebar = ({ 
+  isVisible, 
+  onToggle, 
+  url, 
+  setUrl, 
+  pinCount, 
+  setPinCount, 
+  onGeneratePins, 
+  onShufflePins 
+}) => {
   return (
     <aside className={`${isVisible ? 'w-80' : 'w-0'} transition-all duration-300 bg-white border-r flex flex-col overflow-hidden`}>
       {/* Toggle button */}
@@ -53,20 +58,28 @@ const Sidebar = ({ isVisible, onToggle }) => {
 
         {/* Generate Pins Button */}
         <div className="flex gap-2">
-          <Button className="flex-1 bg-primary hover:bg-primary/90">
+          <Button 
+            className="flex-1"
+            onClick={onGeneratePins}
+          >
             <span className="text-lg mr-1">⊕</span> GENERATE PINS
           </Button>
           <Input
             type="number"
             value={pinCount}
-            onChange={(e) => setPinCount(e.target.value)}
+            onChange={(e) => setPinCount(parseInt(e.target.value) || 1)}
             className="w-16 text-center"
             min={1}
+            max={50}
           />
         </div>
 
         {/* Shuffle Pins */}
-        <Button variant="outline" className="w-full text-gray-600">
+        <Button 
+          variant="outline" 
+          className="w-full text-gray-600 border-primary text-primary hover:bg-primary/10"
+          onClick={onShufflePins}
+        >
           ↻ SHUFFLE PINS
         </Button>
 
