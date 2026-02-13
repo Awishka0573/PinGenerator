@@ -122,7 +122,7 @@ const Footer = () => {
                 </Button>
                 <div className="flex items-center justify-center gap-1.5 mt-3">
                   <div className="w-5 h-5 rounded-full bg-[#BD081C]"></div>
-                  <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600"></div>
+                  <div className="w-5 h-5 rounded-full bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600"></div>
                   <div className="w-5 h-5 rounded-full bg-[#0A66C2]"></div>
                   <div className="w-5 h-5 rounded-full bg-black"></div>
                   <div className="w-5 h-5 rounded-full bg-[#1877F2]"></div>

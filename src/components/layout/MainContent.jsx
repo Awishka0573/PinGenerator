@@ -7,13 +7,13 @@ const MainContent = ({ pins = [], onDeletePin, onShufflePin, onEditPin, onClearP
   const [confirmOpen, setConfirmOpen] = useState(false)
   const tutorials = [
     { title: 'Introduction Video', id: 1, url: 'https://www.youtube.com/watch?v=6WOOL9XDl0s' },
-    { title: 'Full Automation Guide', id: 2 },
-    { title: 'Create Dynamic Templates', id: 3 },
-    { title: 'Shopify Tutorial', id: 4 },
-    { title: 'Etsy Tutorial', id: 5 },
-    { title: 'Amazon Tutorial', id: 6 },
-    { title: 'Wordpress Tutorial', id: 7 },
-    { title: 'Pinterest SEO Guide', id: 8 },
+    { title: 'Full Automation Guide', id: 2, url: 'https://www.youtube.com/watch?v=NMfI9Opkkyk' },
+    { title: 'Create Dynamic Templates', id: 3, url: 'https://www.youtube.com/watch?v=8CiRD9j6mxE' },
+    { title: 'Shopify Tutorial', id: 4, url: 'https://www.youtube.com/watch?v=UA5Q2yBxU-k' },
+    { title: 'Etsy Tutorial', id: 5, url: 'https://www.youtube.com/watch?v=NRHTNIyRaHQ' },
+    { title: 'Amazon Tutorial', id: 6, url: 'https://www.youtube.com/watch?v=TUh0B46iSnA' },
+    { title: 'Wordpress Tutorial', id: 7, url: 'https://www.youtube.com/watch?v=0J9bJ5cu0ZM' },
+    { title: 'Pinterest SEO Guide', id: 8, url: 'https://www.youtube.com/watch?v=RCAY4tUCTjQ' },
   ]
 
   return (

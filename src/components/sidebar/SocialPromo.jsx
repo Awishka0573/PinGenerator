@@ -21,7 +21,7 @@ const SocialPromo = () => {
           <div className="w-8 h-8 rounded-full bg-[#BD081C] flex items-center justify-center">
             <span className="text-white text-xs font-bold">P</span>
           </div>
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-full bg-linear-to-tr from-yellow-400 via-pink-500 to-purple-600 flex items-center justify-center">
             <span className="text-white text-xs font-bold">📷</span>
           </div>
           <div className="w-8 h-8 rounded-full bg-[#0A66C2] flex items-center justify-center">
