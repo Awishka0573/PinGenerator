@@ -3,10 +3,10 @@ import { Plus, Play, Trash2 } from 'lucide-react'
 import { Card, CardContent, Dialog, DialogContent, DialogFooter, Button } from '@/components/ui'
 import { PinCard } from '@/components/pins'
 
-const MainContent = ({ pins = [], onDeletePin, onShufflePin, onEditPin, onClearPins }) => {
+const MainContent = ({ pins = [], onDeletePin, onShufflePin, onEditPin, onClearPins, onLayoutChange, onUpdatePin }) => {
   const [confirmOpen, setConfirmOpen] = useState(false)
   const tutorials = [
-    { title: 'Introduction Video', id: 1 },
+    { title: 'Introduction Video', id: 1, url: 'https://www.youtube.com/watch?v=6WOOL9XDl0s' },
     { title: 'Full Automation Guide', id: 2 },
     { title: 'Create Dynamic Templates', id: 3 },
     { title: 'Shopify Tutorial', id: 4 },
@@ -67,6 +67,8 @@ const MainContent = ({ pins = [], onDeletePin, onShufflePin, onEditPin, onClearP
                 onDelete={onDeletePin}
                 onShuffle={onShufflePin}
                 onEdit={onEditPin}
+                onLayoutChange={onLayoutChange}
+                onUpdatePin={onUpdatePin}
               />
             ))}
           </div>
@@ -85,8 +87,20 @@ const MainContent = ({ pins = [], onDeletePin, onShufflePin, onEditPin, onClearP
           <h2 className="text-2xl font-semibold text-gray-800 mb-6">Tutorials</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
             {tutorials.map((tutorial) => (
-              <Card key={tutorial.id} className="overflow-hidden bg-primary/10 border-primary/20 hover:shadow-lg transition-shadow cursor-pointer">
-                <CardContent className="p-4">
+              <Card
+                key={tutorial.id}
+                className="overflow-hidden bg-primary/10 border-primary/20 hover:shadow-lg transition-shadow"
+              >
+                <CardContent className="p-0">
+                  <a
+                    href={tutorial.url || '#'}
+                    target={tutorial.url ? '_blank' : undefined}
+                    rel={tutorial.url ? 'noreferrer' : undefined}
+                    className={`block p-4 ${tutorial.url ? 'cursor-pointer' : 'cursor-default'}`}
+                    onClick={(e) => {
+                      if (!tutorial.url) e.preventDefault()
+                    }}
+                  >
                   <div className="flex gap-3">
                     {/* Play button */}
                     <div className="shrink-0">
@@ -120,6 +134,7 @@ const MainContent = ({ pins = [], onDeletePin, onShufflePin, onEditPin, onClearP
                       <span className="text-xs text-gray-500 ml-1">PIN GENERATOR</span>
                     </div>
                   </div>
+                  </a>
                 </CardContent>
               </Card>
             ))}

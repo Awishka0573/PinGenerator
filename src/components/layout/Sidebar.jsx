@@ -18,7 +18,15 @@ const Sidebar = ({
   pinCount, 
   setPinCount, 
   onGeneratePins, 
-  onShufflePins 
+  onShufflePins,
+  selectedColors,
+  onColorsChange,
+  fontColor,
+  onFontColorChange,
+  fontType,
+  onFontTypeChange,
+  useUpperCase,
+  onUseUpperCaseChange
 }) => {
   return (
     <aside className={`${isVisible ? 'w-80' : 'w-0'} transition-all duration-300 bg-white border-r flex flex-col overflow-hidden`}>
@@ -98,7 +106,16 @@ const Sidebar = ({
 
         {/* Accordion Sections */}
         <div className="space-y-0">
-          <ColorsAndFont />
+          <ColorsAndFont 
+            selectedColors={selectedColors}
+            onColorsChange={onColorsChange}
+            fontColor={fontColor}
+            onFontColorChange={onFontColorChange}
+            fontType={fontType}
+            onFontTypeChange={onFontTypeChange}
+            useUpperCase={useUpperCase}
+            onUseUpperCaseChange={onUseUpperCaseChange}
+          />
           <Templates />
           <BrandSettings />
           <Images />
