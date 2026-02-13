@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { Header, Sidebar, MainContent, Footer } from '@/components/layout'
 import { PinEditModal } from '@/components/pins'
 import { SchedulePage } from '@/pages'
+import { TEMPLATES } from '@/data/templates'
 import './App.css'
 
 // LocalStorage keys
@@ -14,6 +15,7 @@ const STORAGE_KEYS = {
   FONT_COLOR: 'pingenerator_fontColor',
   FONT_TYPE: 'pingenerator_fontType',
   USE_UPPERCASE: 'pingenerator_useUpperCase',
+  SELECTED_TEMPLATES: 'pingenerator_selectedTemplates',
 }
 
 // Helper functions for localStorage
@@ -55,6 +57,7 @@ function GeneratePage() {
   const [fontColor, setFontColor] = useState(() => loadFromStorage(STORAGE_KEYS.FONT_COLOR, '#E53935'))
   const [fontType, setFontType] = useState(() => loadFromStorage(STORAGE_KEYS.FONT_TYPE, 'serif'))
   const [useUpperCase, setUseUpperCase] = useState(() => loadFromStorage(STORAGE_KEYS.USE_UPPERCASE, true))
+  const [selectedTemplateIds, setSelectedTemplateIds] = useState(() => loadFromStorage(STORAGE_KEYS.SELECTED_TEMPLATES, []))
   const [editingPin, setEditingPin] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -87,6 +90,10 @@ function GeneratePage() {
   useEffect(() => {
     saveToStorage(STORAGE_KEYS.USE_UPPERCASE, useUpperCase)
   }, [useUpperCase])
+
+  useEffect(() => {
+    saveToStorage(STORAGE_KEYS.SELECTED_TEMPLATES, selectedTemplateIds)
+  }, [selectedTemplateIds])
 
   // Track if this is the initial mount
   const isColorInitialMount = useRef(true)
@@ -157,8 +164,16 @@ function GeneratePage() {
 
   const generatePins = useCallback(() => {
     const colorsToUse = selectedColors.length > 0 ? selectedColors : DEFAULT_COLORS
+    const templatesToUse = selectedTemplateIds.length > 0 ? selectedTemplateIds : [TEMPLATES[0]?.id]
+    const templatesById = TEMPLATES.reduce((acc, template) => {
+      acc[template.id] = template
+      return acc
+    }, {})
     const newPins = []
     for (let i = 0; i < pinCount; i++) {
+      const templateId = templatesToUse[i % templatesToUse.length]
+      const template = templatesById[templateId]
+      const layout = template?.layout || {}
       newPins.push({
         id: Date.now() + i,
         title: '{TITLE}',
@@ -167,11 +182,18 @@ function GeneratePage() {
         fontColor: fontColor,
         fontType: fontType,
         useUpperCase: useUpperCase,
+        titleX: layout.titleX,
+        titleY: layout.titleY,
+        descX: layout.descX,
+        descY: layout.descY,
+        titleFontSize: layout.titleFontSize,
+        descFontSize: layout.descFontSize,
+        templateId: template?.id,
         image: sampleImages[i % sampleImages.length],
       })
     }
     setPins(newPins)
-  }, [pinCount, selectedColors, fontColor, fontType, useUpperCase])
+  }, [pinCount, selectedColors, fontColor, fontType, useUpperCase, selectedTemplateIds])
 
   const shufflePins = useCallback(() => {
     const colorsToUse = selectedColors.length > 0 ? selectedColors : DEFAULT_COLORS
@@ -249,6 +271,8 @@ function GeneratePage() {
         onFontTypeChange={setFontType}
         useUpperCase={useUpperCase}
         onUseUpperCaseChange={setUseUpperCase}
+        selectedTemplateIds={selectedTemplateIds}
+        onSelectedTemplateIdsChange={setSelectedTemplateIds}
       />
       
       {/* Main Content */}

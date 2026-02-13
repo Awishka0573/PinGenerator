@@ -379,8 +379,18 @@ const PinCard = ({ pin, onDelete, onShuffle, onEdit, onUpdatePin }) => {
     sage: 'bg-lime-500',
   }
 
+  const colorValueMap = {
+    pink: '#F472B6',
+    orange: '#FB923C',
+    peach: '#FDBA74',
+    coral: '#F87171',
+    green: '#A3E635',
+    sage: '#84CC16',
+  }
+
   const headerColor = isHexColor ? '' : (colorStyles[pin.color] || 'bg-gray-600')
   const headerStyle = isHexColor ? { backgroundColor: pin.color } : { backgroundColor: '#4B5563' }
+  const accentColor = isHexColor ? pin.color : (colorValueMap[pin.color] || '#4B5563')
   const fontColorStyle = pin.fontColor ? { color: pin.fontColor } : { color: '#ffffff' }
 
   // Font type mapping
@@ -396,6 +406,34 @@ const PinCard = ({ pin, onDelete, onShuffle, onEdit, onUpdatePin }) => {
 
   const fontFamily = fontFamilyMap[pin.fontType] || 'Georgia, serif'
   const displayTitle = pin.useUpperCase ? titleText.toUpperCase() : titleText
+
+  const templateStyles = {
+    'basic-big-top-banner': { topBanner: true, frame: true },
+    'basic-big-top-text': { topBanner: true, frame: true, topBannerHeight: 'h-20' },
+    'basic-blank-frame': { frame: true },
+    'basic-call-to-action': { bottomBanner: true, frame: true, bottomBannerHeight: 'h-16' },
+    'basic-center-wave': { wave: true, frame: true },
+    'basic-circle-image': { circleFrame: true, bottomBanner: true, frame: true },
+    'basic-color-blobs': { blobs: true, frame: true },
+    'basic-full-image-banner': { bottomBanner: true, frame: true },
+    'basic-image-only': { frame: false },
+    'basic-text-blob': { textBlob: true, frame: true },
+    'blocks-layered': { topBanner: true, bottomBanner: true, frame: true },
+    'blocks-diagonal': { blobs: true, wave: true, frame: true },
+    'clean-frame': { frame: true },
+    'clean-top-label': { topBanner: true, frame: true, topBannerHeight: 'h-14' },
+    'education-highlight': { textBlob: true, frame: true },
+    'education-checklist': { bottomBanner: true, frame: true, bottomBannerHeight: 'h-12' },
+    'girl-boss-glam': { topBanner: true, textBlob: true, frame: true },
+    'girl-boss-quote': { textBlob: true, frame: true },
+    'grey-soft-frame': { frame: true },
+    'grey-minimal': { topBanner: true, frame: true, topBannerHeight: 'h-14' },
+    'interior-room': { bottomBanner: true, circleFrame: true, frame: true, bottomBannerHeight: 'h-12' },
+    'interior-mood': { wave: true, frame: true },
+  }
+
+  const templateConfig = templateStyles[pin.templateId] || { frame: true }
+  const showFrame = templateConfig.frame !== false
 
   return (
     <div 
@@ -416,8 +454,55 @@ const PinCard = ({ pin, onDelete, onShuffle, onEdit, onUpdatePin }) => {
           <div className="w-full h-full" style={headerStyle} />
         )}
 
+        {/* Template decorations */}
+        {templateConfig.topBanner && (
+          <div
+            className={`absolute inset-x-0 top-0 ${templateConfig.topBannerHeight || 'h-16'} pointer-events-none`}
+            style={{ backgroundColor: accentColor }}
+          />
+        )}
+        {templateConfig.bottomBanner && (
+          <div
+            className={`absolute inset-x-0 bottom-0 ${templateConfig.bottomBannerHeight || 'h-16'} pointer-events-none`}
+            style={{ backgroundColor: accentColor }}
+          />
+        )}
+        {templateConfig.wave && (
+          <div
+            className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-16 rounded-full opacity-80 pointer-events-none"
+            style={{ backgroundColor: accentColor }}
+          />
+        )}
+        {templateConfig.textBlob && (
+          <div
+            className="absolute left-1/2 top-1/2 w-56 h-36 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80 pointer-events-none"
+            style={{ backgroundColor: accentColor }}
+          />
+        )}
+        {templateConfig.circleFrame && (
+          <div className="absolute left-1/2 top-20 w-28 h-28 -translate-x-1/2 rounded-full border-4 border-white/70 pointer-events-none" />
+        )}
+        {templateConfig.blobs && (
+          <>
+            <div
+              className="absolute -top-6 -left-6 w-24 h-24 rounded-full opacity-70 pointer-events-none"
+              style={{ backgroundColor: accentColor }}
+            />
+            <div
+              className="absolute top-20 -right-10 w-28 h-28 rounded-full opacity-60 pointer-events-none"
+              style={{ backgroundColor: accentColor }}
+            />
+            <div
+              className="absolute bottom-6 left-8 w-20 h-20 rounded-full opacity-65 pointer-events-none"
+              style={{ backgroundColor: accentColor }}
+            />
+          </>
+        )}
+
         {/* White border frame overlay */}
-        <div className="absolute inset-3 border-2 border-white/50 pointer-events-none" />
+        {showFrame && (
+          <div className="absolute inset-3 border-2 border-white/50 pointer-events-none" />
+        )}
 
         {/* Draggable Title Element */}
         <div

@@ -26,7 +26,9 @@ const Sidebar = ({
   fontType,
   onFontTypeChange,
   useUpperCase,
-  onUseUpperCaseChange
+  onUseUpperCaseChange,
+  selectedTemplateIds,
+  onSelectedTemplateIdsChange
 }) => {
   return (
     <aside className={`${isVisible ? 'w-80' : 'w-0'} transition-all duration-300 bg-white border-r flex flex-col overflow-hidden`}>
@@ -116,7 +118,10 @@ const Sidebar = ({
             useUpperCase={useUpperCase}
             onUseUpperCaseChange={onUseUpperCaseChange}
           />
-          <Templates />
+          <Templates 
+            selectedTemplateIds={selectedTemplateIds}
+            onSelectedTemplateIdsChange={onSelectedTemplateIdsChange}
+          />
           <BrandSettings />
           <Images />
           <StockImages />
